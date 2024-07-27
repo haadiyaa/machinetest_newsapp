@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/controller/authprovider.dart';
+import 'package:machinetest_newsapp/controller/newsprovider.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
 import 'package:machinetest_newsapp/utils/validators.dart';
@@ -19,6 +20,7 @@ class SignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
+    final newsProvider = Provider.of<NewsProvider>(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +83,8 @@ class SignupPage extends StatelessWidget {
                             );
                         }
                         if (_formKey.currentState!.validate()) {
-                          await authProvider
+                          await newsProvider.getCountryCodeFromIp().then((value)async {
+                            await authProvider
                               .signUp(
                                   name: name.text.trim(),
                                   email: email.text.trim(),
@@ -98,10 +101,12 @@ class SignupPage extends StatelessWidget {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => const HomePage()));
+                                        builder: (_) =>  HomePage(code: newsProvider.code!,)));
                               }
                             },
                           );
+                          },);
+                          
                         }
                       },
                     ),

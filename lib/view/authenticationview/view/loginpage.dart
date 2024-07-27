@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/controller/authprovider.dart';
+import 'package:machinetest_newsapp/controller/newsprovider.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/functions.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
@@ -20,6 +21,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final authProvider = Provider.of<AuthProvider>(context);
+    final newsProvider = Provider.of<NewsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.transparent,
@@ -67,14 +69,16 @@ class LoginPage extends StatelessWidget {
                       text: 'Login',
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          if (authProvider.isLoading) {
+                          
+                          if (authProvider.status==Status.initial) {
                             ScaffoldMessenger.of(context)
                               ..hideCurrentSnackBar()
                               ..showSnackBar(
                                 const SnackBar(content: Text('Please Wait...')),
                               );
                           }
-                          await authProvider
+                          await newsProvider.getCountryCodeFromIp().then((value)async {
+                            await authProvider
                               .logIn(
                                   email: email.text.trim(),
                                   password: password.text.trim())
@@ -91,10 +95,12 @@ class LoginPage extends StatelessWidget {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => HomePage()));
+                                        builder: (_) =>  HomePage(code: newsProvider.code!,)));
                               }
                             },
                           );
+                          },);
+                          
                         }
                       },
                     ),

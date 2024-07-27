@@ -18,7 +18,7 @@ class AuthProvider extends ChangeNotifier {
   }) async {
     isLoading = true;
     error = "";
-
+    status = Status.initial;
     try {
       userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -49,7 +49,7 @@ class AuthProvider extends ChangeNotifier {
   }) async {
     isLoading = true;
     error = "";
-
+    status = Status.initial;
     try {
       userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);

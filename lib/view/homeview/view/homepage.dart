@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.code});
+  final String code;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -25,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     final newsProvider = Provider.of<NewsProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        
         backgroundColor: Constants.blue,
         title: const Text(
           Constants.appBarHead,
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                     size: 15,
                   ),
                 ),
-                const Text('IN',style: MyTextStyle.whitetextBold,)
+                Text(widget.code,style: MyTextStyle.whitetextBold,)
               ],
             ),
           ),
@@ -106,12 +106,12 @@ class _HomePageState extends State<HomePage> {
                                       maxLines: 3,
                                     ),
                                     Constants.height5,
-                                    Text(
-                                      newsProvider
-                                          .newsModel!.articles![index].author!,
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                    // Text(
+                                    //   newsProvider
+                                    //       .newsModel!.articles![index].author!,
+                                    //   maxLines: 3,
+                                    //   overflow: TextOverflow.ellipsis,
+                                    // ),
                                     Constants.height5,
                                     Text(
                                       Functions.formatTimeAgo(DateTime.parse(
