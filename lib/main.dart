@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:machinetest_newsapp/firebase_options.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
@@ -18,18 +17,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return ScreenUtilInit(
-      designSize: Size(size.width, size.height),
-      builder: (context, child) => MaterialApp(
-        theme: ThemeData(
-          scaffoldBackgroundColor: Constants.bgColor,
-          fontFamily: 'Poppins',
-        ),
-        debugShowCheckedModeBanner: false,
-        home: child,
+    return MaterialApp(
+      theme: ThemeData(
+        scaffoldBackgroundColor: Constants.bgColor,
+        fontFamily: 'Poppins',
       ),
-      child: LoginPage(),
+      debugShowCheckedModeBanner: false,
+      home: LoginPage(),
     );
   }
 }

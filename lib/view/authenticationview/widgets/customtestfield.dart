@@ -6,16 +6,18 @@ class CustomTextfield extends StatelessWidget {
   const CustomTextfield({
     super.key,
     required this.text,
-    required this.textEditingController,
+    required this.textEditingController, this.validator,
   });
   final String text;
   final TextEditingController textEditingController;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        validator: validator,
         controller: textEditingController,
         decoration: InputDecoration(
           filled: true,

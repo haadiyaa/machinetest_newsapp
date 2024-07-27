@@ -9,6 +9,7 @@ class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +28,44 @@ class LoginPage extends StatelessWidget {
           child: SizedBox(
             height: size.height * 0.75,
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Spacer(),
-                Column(
-                  children: [
-                    CustomTextfield(
-                      text: 'Email',
-                      textEditingController: email,
-                    ),
-                    CustomTextfield(
-                      text: 'Password',
-                      textEditingController: password,
-                    ),
-                  ],
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      CustomTextfield(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                                return "Email is required";
+                              }
+                              final emailReg = RegExp(
+                                  r"^[a-zA-Z0-9_\-\.\S]{4,}[@][a-z]+[\.][a-z]{2,3}[\s]*$");
+                              if (!emailReg.hasMatch(value)) {
+                                return 'Invalid email address!';
+                              }return null;
+                        },
+                        text: 'Email',
+                        textEditingController: email,
+                      ),
+                      CustomTextfield(
+                        validator: (value) {
+                          final paswd = RegExp(
+                                  r'^(?=.*?[A-Z][a-z])(?=.*?[0-9]).{6,}$');
+                              if (value!.isEmpty) {
+                                return 'please enter the password';
+                              }else if(value.length<6){
+                                return 'Please enter atleast 6 characters!';
+                              }
+                               else if (!paswd.hasMatch(value)) {
+                                return 'Password should contain atleast one digit';
+                              }return null;
+                        },
+                        text: 'Password',
+                        textEditingController: password,
+                      ),
+                    ],
+                  ),
                 ),
                 const Spacer(
                   flex: 2,
@@ -50,7 +75,9 @@ class LoginPage extends StatelessWidget {
                     CustomButton(
                       size: size,
                       text: 'Login',
-                      onPressed: () {},
+                      onPressed: () {
+                        _formKey.currentState!.validate();
+                      },
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
