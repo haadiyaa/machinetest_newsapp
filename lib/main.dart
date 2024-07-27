@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:machinetest_newsapp/controller/newsprovider.dart';
 import 'package:machinetest_newsapp/firebase_options.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,13 +19,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: Constants.bgColor,
-        fontFamily: 'Poppins',
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => NewsProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+          scaffoldBackgroundColor: Constants.bgColor,
+          fontFamily: 'Poppins',
+        ),
+        debugShowCheckedModeBanner: false,
+        home: LoginPage(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
     );
   }
 }
