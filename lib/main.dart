@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
 
@@ -11,13 +12,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        scaffoldBackgroundColor: Constants.bgColor,
-        fontFamily: 'Poppins',
+    final size=MediaQuery.of(context).size;
+    return ScreenUtilInit(
+      designSize: Size(size.width,size.height),
+      builder: (context, child) => MaterialApp(
+        theme: ThemeData(
+          scaffoldBackgroundColor: Constants.bgColor,
+          fontFamily: 'Poppins',
+        ),
+        debugShowCheckedModeBanner: false,
+        home: child,
       ),
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      child: LoginPage(),
     );
   }
 }

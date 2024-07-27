@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
-import 'package:machinetest_newsapp/view/authenticationview/view/signuppage.dart';
+import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/custombutton.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/customtestfield.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class SignupPage extends StatelessWidget {
+  SignupPage({super.key});
+  final TextEditingController name = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
 
@@ -27,7 +28,6 @@ class LoginPage extends StatelessWidget {
           child: SizedBox(
             height: size.height * 0.75,
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Spacer(),
                 Column(
@@ -49,19 +49,20 @@ class LoginPage extends StatelessWidget {
                   children: [
                     CustomButton(
                       size: size,
-                      text: 'Login',
+                      text: 'Signup',
                       onPressed: () {},
                     ),
+                    // Constants.height10,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('New here? '),
+                        const Text('Already have an account? '),
                         TextButton(
                           onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>SignupPage()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>LoginPage()));
                           },
                           child: const Text(
-                            'Signup',
+                            'Login',
                             style: MyTextStyle.bluetextBold,
                           ),
                         )
