@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                     size: 15,
                   ),
                 ),
-                Text('IN',style: MyTextStyle.whitetextBold,)
+                const Text('IN',style: MyTextStyle.whitetextBold,)
               ],
             ),
           ),

@@ -5,6 +5,9 @@ class Constants {
   static const appBarHead='MyNews';
   static const topHeadline='Top Headlines';
 
+  //=======================firebase====================
+  static const collection='users';
+
   //===================COLOR THEME========================
   static const Color bgColor=Color(0xfff5f9fd);
   static const Color transparent=Colors.transparent;

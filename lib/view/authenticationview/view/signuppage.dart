@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:machinetest_newsapp/controller/authprovider.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
 import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/custombutton.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/customtestfield.dart';
 import 'package:machinetest_newsapp/view/homeview/view/homepage.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
@@ -15,6 +17,7 @@ class SignupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -89,14 +92,40 @@ class SignupPage extends StatelessWidget {
                     CustomButton(
                       size: size,
                       text: 'Signup',
-                      onPressed: () {
+                      onPressed: () async {
+                        if (authProvider.isLoading) {
+                          ScaffoldMessenger.of(context)
+                            ..hideCurrentSnackBar()
+                            ..showSnackBar(
+                              const SnackBar(content: Text('Please Wait...')),
+                            );
+                        }
                         if (_formKey.currentState!.validate()) {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => HomePage()));
+                          await authProvider
+                              .signUp(
+                                  name: name.text.trim(),
+                                  email: email.text.trim(),
+                                  password: password.text.trim())
+                              .then(
+                            (value) {
+                              if (authProvider.error.isNotEmpty ||
+                                  authProvider.error != "") {
+                                ScaffoldMessenger.of(context)
+                                  ..hideCurrentSnackBar()
+                                  ..showSnackBar(
+                                    SnackBar(content: Text(authProvider.error)),
+                                  );
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const HomePage()));
+                              }
+                            },
+                          );
                         }
                       },
                     ),
-                    // Constants.height10,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
