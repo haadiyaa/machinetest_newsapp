@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
+import 'package:machinetest_newsapp/view/loginview/widgets/customtestfield.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -36,44 +37,6 @@ class LoginPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CustomTextfield extends StatelessWidget {
-  const CustomTextfield({
-    super.key,
-    required this.text,
-    required this.textEditingController,
-  });
-  final String text;
-  final TextEditingController textEditingController;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: textEditingController,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Constants.white,
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide.none,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
-        hintText: text,
       ),
     );
   }
