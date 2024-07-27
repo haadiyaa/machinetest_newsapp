@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Constants.transparent,
         title: const Text(
-          'MyNews',
+          Constants.appBarHead,
           style: MyTextStyle.bluetextBold,
         ),
       ),

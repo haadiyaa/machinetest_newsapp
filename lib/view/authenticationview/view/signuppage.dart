@@ -4,6 +4,7 @@ import 'package:machinetest_newsapp/utils/mytextstyle.dart';
 import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/custombutton.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/customtestfield.dart';
+import 'package:machinetest_newsapp/view/homeview/view/homepage.dart';
 
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
@@ -19,7 +20,7 @@ class SignupPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Constants.transparent,
         title: const Text(
-          'MyNews',
+          Constants.appBarHead,
           style: MyTextStyle.bluetextBold,
         ),
       ),
@@ -89,7 +90,10 @@ class SignupPage extends StatelessWidget {
                       size: size,
                       text: 'Signup',
                       onPressed: () {
-                        _formKey.currentState!.validate();
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => HomePage()));
+                        }
                       },
                     ),
                     // Constants.height10,

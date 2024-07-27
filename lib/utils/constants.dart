@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class Constants {
+  //===================STRINGS===========================
+  static const appBarHead='MyNews';
+  static const topHeadline='Top Headlines';
+
   //===================COLOR THEME========================
   static const Color bgColor=Color(0xfff5f9fd);
   static const Color transparent=Colors.transparent;
   static const Color white=Colors.white ;
+  static const Color black=Colors.black ;
+  static const Color grey=Colors.grey ;
   static const Color blue= Color(0xff0c54be);
 
   //=====================HEIGHT========================
