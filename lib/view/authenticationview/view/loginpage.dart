@@ -51,7 +51,7 @@ class LoginPage extends StatelessWidget {
                       CustomTextfield(
                         validator: (value) {
                           final paswd = RegExp(
-                                  r'^(?=.*?[A-Z][a-z])(?=.*?[0-9]).{6,}$');
+                                  r'^(?=.*\d)[a-zA-Z0-9].{6,}$');
                               if (value!.isEmpty) {
                                 return 'please enter the password';
                               }else if(value.length<6){
