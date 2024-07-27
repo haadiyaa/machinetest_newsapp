@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
-import 'package:machinetest_newsapp/view/loginview/widgets/custombutton.dart';
-import 'package:machinetest_newsapp/view/loginview/widgets/customtestfield.dart';
+import 'package:machinetest_newsapp/view/authenticationview/widgets/custombutton.dart';
+import 'package:machinetest_newsapp/view/authenticationview/widgets/customtestfield.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
-import 'package:machinetest_newsapp/view/loginview/view/loginpage.dart';
+import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
 
 void main() {
   runApp(const MyApp());
