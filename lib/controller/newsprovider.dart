@@ -26,7 +26,7 @@ class NewsProvider extends ChangeNotifier {
         print(e.toString());
       }
       finally{
-        isLoading=true;
+        isLoading=false;
         notifyListeners(); 
       }
     }
