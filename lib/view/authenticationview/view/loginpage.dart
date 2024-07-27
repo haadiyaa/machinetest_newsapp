@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/controller/authprovider.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
+import 'package:machinetest_newsapp/utils/functions.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
+import 'package:machinetest_newsapp/utils/validators.dart';
 import 'package:machinetest_newsapp/view/authenticationview/view/signuppage.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/custombutton.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/customtestfield.dart';
@@ -40,30 +42,14 @@ class LoginPage extends StatelessWidget {
                     children: [
                       CustomTextfield(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Email is required";
-                          }
-                          final emailReg = RegExp(
-                              r"^[a-zA-Z0-9_\-\.\S]{4,}[@][a-z]+[\.][a-z]{2,3}[\s]*$");
-                          if (!emailReg.hasMatch(value)) {
-                            return 'Invalid email address!';
-                          }
-                          return null;
+                          return Validators.emailValidator(value);
                         },
                         text: 'Email',
                         textEditingController: email,
                       ),
                       CustomTextfield(
                         validator: (value) {
-                          final paswd = RegExp(r'^(?=.*\d)[a-zA-Z0-9].{6,}$');
-                          if (value!.isEmpty) {
-                            return 'please enter the password';
-                          } else if (value.length < 6) {
-                            return 'Please enter atleast 6 characters!';
-                          } else if (!paswd.hasMatch(value)) {
-                            return 'Password should contain atleast one digit';
-                          }
-                          return null;
+                          return Validators.passValidator(value);
                         },
                         text: 'Password',
                         textEditingController: password,
@@ -102,7 +88,7 @@ class LoginPage extends StatelessWidget {
                                   );
                               } else if (authProvider.status ==
                                   Status.loggedIn) {
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => HomePage()));

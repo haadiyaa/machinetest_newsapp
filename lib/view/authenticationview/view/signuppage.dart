@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/controller/authprovider.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
+import 'package:machinetest_newsapp/utils/validators.dart';
 import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/custombutton.dart';
 import 'package:machinetest_newsapp/view/authenticationview/widgets/customtestfield.dart';
@@ -41,42 +42,21 @@ class SignupPage extends StatelessWidget {
                     children: [
                       CustomTextfield(
                         validator: (value) {
-                          final name = RegExp(r'^[A-Za-z\s]{3,}[\s]*$');
-                          if (value!.isEmpty) {
-                            return 'User name can\'t be empty';
-                          } else if (!name.hasMatch(value)) {
-                            return "Enter a valid name";
-                          }
+                          return Validators.nameValidator(value);
                         },
                         text: 'Name',
                         textEditingController: name,
                       ),
                       CustomTextfield(
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Email is required";
-                          }
-                          final emailReg = RegExp(
-                              r"^[a-zA-Z0-9_\-\.\S]{4,}[@][a-z]+[\.][a-z]{2,3}[\s]*$");
-                          if (!emailReg.hasMatch(value)) {
-                            return 'Invalid email address!';
-                          }
-                          return null;
+                          return Validators.emailValidator(value);
                         },
                         text: 'Email',
                         textEditingController: email,
                       ),
                       CustomTextfield(
                         validator: (value) {
-                          final paswd = RegExp(r'^(?=.*\d)[a-zA-Z0-9].{6,}$');
-                          if (value!.isEmpty) {
-                            return 'please enter the password';
-                          } else if (value.length < 6) {
-                            return 'Please enter atleast 6 characters!';
-                          } else if (!paswd.hasMatch(value)) {
-                            return 'Password should contain atleast one digit';
-                          }
-                          return null;
+                          return Validators.passValidator(value);
                         },
                         text: 'Password',
                         textEditingController: password,
@@ -108,15 +88,14 @@ class SignupPage extends StatelessWidget {
                                   password: password.text.trim())
                               .then(
                             (value) {
-                              if (authProvider.error.isNotEmpty ||
-                                  authProvider.error != "") {
+                              if (authProvider.status==Status.error) {
                                 ScaffoldMessenger.of(context)
                                   ..hideCurrentSnackBar()
                                   ..showSnackBar(
                                     SnackBar(content: Text(authProvider.error)),
                                   );
                               } else {
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => const HomePage()));
