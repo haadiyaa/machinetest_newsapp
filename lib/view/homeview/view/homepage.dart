@@ -19,7 +19,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // Provider.of<AuthProvider>(context, listen: false).initRemoteConfig();
     Provider.of<NewsProvider>(context, listen: false).fetchNews('in');
   }
 
@@ -27,7 +26,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final newsProvider = Provider.of<NewsProvider>(context);
-    // final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.blue,
@@ -57,6 +55,7 @@ class _HomePageState extends State<HomePage> {
                             authProvider.countryCode,
                             style: MyTextStyle.whitetextBold,
                           ),
+
                   ],
                 ),
               );
@@ -120,12 +119,12 @@ class _HomePageState extends State<HomePage> {
                                       maxLines: 3,
                                     ),
                                     Constants.height5,
-                                    // Text(
-                                    //   newsProvider
-                                    //       .newsModel!.articles![index].author!,
-                                    //   maxLines: 3,
-                                    //   overflow: TextOverflow.ellipsis,
-                                    // ),
+                                    Text(
+                                      newsProvider
+                                          .newsModel!.articles![index].author!,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                     Constants.height5,
                                     Text(
                                       Functions.formatTimeAgo(DateTime.parse(
