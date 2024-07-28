@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/controller/authprovider.dart';
 import 'package:machinetest_newsapp/controller/newsprovider.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
-import 'package:machinetest_newsapp/utils/functions.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
 import 'package:machinetest_newsapp/utils/validators.dart';
 import 'package:machinetest_newsapp/view/authenticationview/view/signuppage.dart';
@@ -53,6 +52,7 @@ class LoginPage extends StatelessWidget {
                         validator: (value) {
                           return Validators.passValidator(value);
                         },
+                        obscureText: true,
                         text: 'Password',
                         textEditingController: password,
                       ),
