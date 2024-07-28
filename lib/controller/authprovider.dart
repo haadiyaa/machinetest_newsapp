@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 
@@ -7,7 +8,9 @@ enum Status { signedIn, loggedIn, error, initial }
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final remoteConfig = FirebaseRemoteConfig.instance;
   late UserCredential userCredential;
+  String countryCode = '';
   bool isLoading = false;
   String error = '';
   Status status = Status.initial;
@@ -19,6 +22,7 @@ class AuthProvider extends ChangeNotifier {
     isLoading = true;
     error = "";
     status = Status.initial;
+    notifyListeners();
     try {
       userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
@@ -50,6 +54,7 @@ class AuthProvider extends ChangeNotifier {
     isLoading = true;
     error = "";
     status = Status.initial;
+    notifyListeners();
     try {
       userCredential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -82,5 +87,23 @@ class AuthProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  AuthProvider() {
+    initRemoteConfig();
+  }
+  Future<void> initRemoteConfig() async {
+    isLoading = true;
+    notifyListeners();
+    await remoteConfig.setDefaults({"country": "IN"});
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 20),
+      minimumFetchInterval: const Duration(seconds: 20),
+    ));
+    await remoteConfig.fetchAndActivate();
+    countryCode = remoteConfig.getString('country');
+    notifyListeners();
+    isLoading = false;
+    notifyListeners();
   }
 }

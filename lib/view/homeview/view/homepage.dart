@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:machinetest_newsapp/controller/authprovider.dart';
 import 'package:machinetest_newsapp/controller/newsprovider.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/functions.dart';
@@ -18,12 +19,15 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // Provider.of<AuthProvider>(context, listen: false).initRemoteConfig();
     Provider.of<NewsProvider>(context, listen: false).fetchNews('in');
   }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final newsProvider = Provider.of<NewsProvider>(context);
+    // final authProvider = Provider.of<AuthProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.blue,
@@ -32,21 +36,31 @@ class _HomePageState extends State<HomePage> {
           style: MyTextStyle.whitetextBold,
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.directions_sharp,
-                    color: Constants.white,
-                    size: 15,
-                  ),
+          Consumer<AuthProvider>(
+            builder: (context, authProvider, child) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 20.0),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.directions_sharp,
+                        color: Constants.white,
+                        size: 15,
+                      ),
+                    ),
+                    authProvider.isLoading
+                        ? const Text('...')
+                        : Text(
+                            // widget.code,
+                            authProvider.countryCode,
+                            style: MyTextStyle.whitetextBold,
+                          ),
+                  ],
                 ),
-                Text(widget.code,style: MyTextStyle.whitetextBold,)
-              ],
-            ),
+              );
+            },
           ),
         ],
       ),
@@ -75,16 +89,16 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (BuildContext context, int index) {
                   return newsProvider.isLoading
                       ? Shimmer.fromColors(
-                        baseColor: const Color.fromARGB(255, 211, 211, 211),
-                        highlightColor: Constants.white,
-                        child: Container(
+                          baseColor: const Color.fromARGB(255, 211, 211, 211),
+                          highlightColor: Constants.white,
+                          child: Container(
                             height: 120,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Constants.white,
                             ),
                           ),
-                      )
+                        )
                       : Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(

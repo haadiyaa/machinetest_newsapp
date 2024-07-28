@@ -16,7 +16,6 @@ class NewsProvider extends ChangeNotifier {
     try {
       final response = await http.get(Uri.parse(
           '${Secrets.baseUrl}${Secrets.countryUrl}in${Secrets.apikeyUrl}${Secrets.key}'));
-      print(response.body);
       final data = jsonDecode(response.body);
       if (response.statusCode == 200) {
         newsModel = NewsModel.fromJson(data);
@@ -41,7 +40,6 @@ class NewsProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         code = data['countryCode'];
-        print(code);
         notifyListeners();
       } else {
         error = 'Unknown';
