@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:machinetest_newsapp/model/newsmodel.dart';
 import 'package:machinetest_newsapp/secrets/secrets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsProvider extends ChangeNotifier {
   NewsModel? newsModel;
@@ -53,4 +54,13 @@ class NewsProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  void launchURLBrowser(String str) async {
+  var url = Uri.parse(str);
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 }
