@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<NewsProvider>(context, listen: false).fetchNews('in');
+    Provider.of<NewsProvider>(context, listen: false).fetchNews(widget.code);
   }
 
   @override
