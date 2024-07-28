@@ -4,7 +4,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 
-enum Status { signedIn, loggedIn, error, initial }
+enum Status { signedIn, loggedIn, error, initial, loggedOut }
 
 class AuthProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -87,6 +87,17 @@ class AuthProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> logOut() async {
+    status = Status.initial;
+    notifyListeners();
+    await _auth.signOut().then(
+      (value) {
+        status = Status.loggedOut;
+        notifyListeners();
+      },
+    );
   }
 
   AuthProvider() {

@@ -4,6 +4,7 @@ import 'package:machinetest_newsapp/controller/newsprovider.dart';
 import 'package:machinetest_newsapp/utils/constants.dart';
 import 'package:machinetest_newsapp/utils/functions.dart';
 import 'package:machinetest_newsapp/utils/mytextstyle.dart';
+import 'package:machinetest_newsapp/view/authenticationview/view/loginpage.dart';
 import 'package:machinetest_newsapp/view/homeview/widgets/newstile.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -27,6 +28,16 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final newsProvider = Provider.of<NewsProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
+
+    if (authProvider.status == Status.loggedOut) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (timeStamp) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => LoginPage()));
+        },
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.blue,
@@ -56,6 +67,23 @@ class _HomePageState extends State<HomePage> {
                             authProvider.countryCode,
                             style: MyTextStyle.whitetextBold,
                           ),
+                    PopupMenuButton<int>(
+                      // surfaceTintColor: Constants.white,
+                      color: Constants.white,
+                      itemBuilder: (context) {
+                        return [
+                          const PopupMenuItem(
+                            value: 1,
+                            child: Text('Logout'),
+                          ),
+                        ];
+                      },
+                      onSelected: (value) {
+                        if (value == 1) {
+                          authProvider.logOut();
+                        }
+                      },
+                    ),
                   ],
                 ),
               );
@@ -99,9 +127,10 @@ class _HomePageState extends State<HomePage> {
                           ),
                         )
                       : InkWell(
-                        onTap: () {
-                         newsProvider.launchURLBrowser(newsProvider.newsModel!.articles![index].url!);
-                        },
+                          onTap: () {
+                            newsProvider.launchURLBrowser(
+                                newsProvider.newsModel!.articles![index].url!);
+                          },
                           child: NewsTile(
                             size: size,
                             newsProvider: newsProvider,
