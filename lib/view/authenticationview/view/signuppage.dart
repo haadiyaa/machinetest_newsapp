@@ -46,7 +46,7 @@ class SignupPage extends StatelessWidget {
                         validator: (value) {
                           return Validators.nameValidator(value);
                         },
-                        text: 'Name',
+                        text: 'Name', 
                         textEditingController: name,
                       ),
                       CustomTextfield(
@@ -60,6 +60,7 @@ class SignupPage extends StatelessWidget {
                         validator: (value) {
                           return Validators.passValidator(value);
                         },
+                        obscureText: true,
                         text: 'Password',
                         textEditingController: password,
                       ),

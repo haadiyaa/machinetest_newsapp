@@ -14,6 +14,7 @@ class NewsProvider extends ChangeNotifier {
   void fetchNews(String city) async {
     isLoading = true;
     error = "";
+    notifyListeners();
     try {
       final response = await http.get(Uri.parse(
           '${Secrets.baseUrl}${Secrets.countryUrl}in${Secrets.apikeyUrl}${Secrets.key}'));
@@ -36,6 +37,7 @@ class NewsProvider extends ChangeNotifier {
   Future<void> getCountryCodeFromIp() async {
     isLoading = true;
     error = '';
+    notifyListeners();
     try {
       final response = await http.get(Uri.parse('http://ip-api.com/json'));
       if (response.statusCode == 200) {

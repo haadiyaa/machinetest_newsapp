@@ -10,13 +10,11 @@ class CustomTextfield extends StatelessWidget {
     required this.textEditingController,
     this.validator,
     this.obscureText = false,
-    // this.isPasswordvisible = false,
   });
   final String text;
   final TextEditingController textEditingController;
   final String? Function(String?)? validator;
   final bool obscureText;
-  // final bool isPasswordvisible;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +23,7 @@ class CustomTextfield extends StatelessWidget {
         child: Consumer<Passvisibilityprovider>(
           builder: (context, passwordVisibilityProvider, child) {
             return TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: validator,
               obscureText: obscureText&&!passwordVisibilityProvider.isPasswordvisible,
               controller: textEditingController,

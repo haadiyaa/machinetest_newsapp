@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                     PopupMenuButton<int>(
                       // surfaceTintColor: Constants.white,
-                      color: Constants.white,
+                      iconColor: Constants.white,
                       itemBuilder: (context) {
                         return [
                           const PopupMenuItem(
