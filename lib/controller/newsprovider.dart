@@ -58,11 +58,11 @@ class NewsProvider extends ChangeNotifier {
   }
 
   void launchURLBrowser(String str) async {
-  var url = Uri.parse(str);
-  if (await canLaunchUrl(url)) {
-    await launchUrl(url);
-  } else {
-    throw 'Could not launch $url';
+    var url = Uri.parse(str);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
-}
 }
